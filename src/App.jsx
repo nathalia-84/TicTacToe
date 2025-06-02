@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Board from "./Board";
 import { TicTacToe } from "./TicTacToe";
-import { miniDecision } from "./Minimax";
 
 export default function App() {
   const [currentSquares, setCurrentSquares] = useState(
@@ -39,7 +38,7 @@ export default function App() {
     }
 
     const aiTimeout = setTimeout(() => {
-      const aiMoveIndex = miniDecision(currentSquares);
+      const aiMoveIndex = TicTacToe.miniDecision(currentSquares);
       const nextSquares = currentSquares.slice();
       nextSquares[aiMoveIndex] = "O";
 

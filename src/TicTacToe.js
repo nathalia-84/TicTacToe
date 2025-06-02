@@ -67,4 +67,53 @@ export class TicTacToe {
       return xCount <= oCount ? "X" : "O";
     }
   }
+
+  static minimaxAlgorithm(squares, isMaximizing) {
+    if (this.terminal(squares)) {
+      return this.utility(squares);
+    }
+    if (isMaximizing) {
+      let value = -Infinity;
+      const availableMoves = this.actions(squares);
+      for (const move of availableMoves) {
+        const nextSquares = this.result(move, true, squares);
+        value = Math.max(value, this.minimaxAlgorithm(nextSquares, false));
+      }
+      return value;
+    } else {
+      let value = Infinity;
+      const availableMoves = this.actions(squares);
+      for (const move of availableMoves) {
+        const nextSquares = this.result(move, false, squares);
+        value = Math.min(value, this.minimaxAlgorithm(nextSquares, true));
+      }
+      return value;
+    }
+  }
+
+  static miniDecision(squares) {
+    let bestScore = Infinity;
+    let bestMove = null;
+    const availableMoves = this.actions(squares);
+
+    if (availableMoves.length === 0) {
+      return null;
+    }
+
+    for (const move of availableMoves) {
+      const nextSquares = this.result(move, false, squares);
+      const score = this.minimaxAlgorithm(nextSquares, true);
+
+      if (score < bestScore) {
+        bestScore = score;
+        bestMove = move;
+      }
+    }
+
+    if (bestMove === null && availableMoves.length > 0) {
+      bestMove = availableMoves[0];
+    }
+
+    return bestMove;
+  }
 }
