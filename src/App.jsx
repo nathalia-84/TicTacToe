@@ -11,7 +11,8 @@ export default function App() {
   const [isGameOver, setIsGameOver] = useState(false);
 
   function handlePlay(nextSquares, index) {
-    if (isGameOver || currentPlayer !== "X") {
+    if (isGameOver || currentPlayer !== "X" || currentSquares[index]) {
+      alert("Jogada inválida!");
       return;
     } else {
       setCurrentSquares(nextSquares);
@@ -26,6 +27,7 @@ export default function App() {
       const newHistory = `O jogo acabou. Vencedor: ${
         TicTacToe.calculateWinner(currentSquares) || "Empate"
       }`;
+      alert(newHistory);
       setHistory((prevHistory) => [...prevHistory, newHistory]);
       return;
     }
